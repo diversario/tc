@@ -10,6 +10,8 @@ I have to look at date string a lot at work so I wrote this tool to output most 
 * `tc` output (not multiline though)
 * mysql dates like `2016-09-05 00:10:33`
 
+Anything else is simply passed to `new Date` in hopes it'll work somehow.
+
 ## Options
 
 `tc` has one option:
