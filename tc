@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+'use strict'
+var moment = require('moment-timezone')
+var args = require('yargs').argv
+var fmt = require('util').format
+
+var timezones_abbr = {
+  'pdt': 'America/Los_Angeles',
+  'pst': 'America/Los_Angeles',
+  'mst': 'America/Denver',
+  'mdt': 'America/Denver',
+  'est': 'America/New_York',
+  'edt': 'America/New_York',
+  'utc': 'Etc/UTC'
+}
+
+// treat args._ as one argument
+var raw_date_str = args._.join(' ')
+
+var ms, mysql_date, js_date
+
+if (/^\d{13}$/.test(raw_date_str)) {
+  ms = parseInt(raw_date_str, 10)
+}
+
+if (/^\d{10}$/.test(raw_date_str)) {
+  ms = parseInt(raw_date_str, 10) * 1000
+}
+
+if (/^\d+.*\dT\d.*Z$/.test(raw_date_str) || /^\w{3} .*[+-]\d{4}( \(\w{3,}\))?$/.test(raw_date_str)) {// ISO date string or js date string
+  js_date = raw_date_str
+}
+
+if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(raw_date_str)) { // stupid mysql date with no timezone
+  mysql_date = raw_date_str
+}
+
+var value
+
+if (ms) {
+  value = moment(ms)
+} else if (js_date) {
+  value = new Date(js_date)
+} else if (mysql_date) {
+  var tz = timezones_abbr[args.t && args.t.toLowerCase()] || timezones_abbr.est
+
+  value = moment.tz(mysql_date, "YYYY-MM-DD HH:mm:ss", tz);
+
+  console.log('Input string processed with timezone %s\n', tz)
+}
+
+var format = 'UTC: %s\nEST: %s\nMST: %s\nPST: %s'
+
+var utc = moment(value).utc().toString()
+var est = moment(value).tz(timezones_abbr.est).toString()
+var mst = moment(value).tz(timezones_abbr.mst).toString()
+var pst = moment(value).tz(timezones_abbr.pst).toString()
+
+var output = fmt(format, utc, est, mst, pst)
+
+console.log(output)

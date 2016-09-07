@@ -1,0 +1,30 @@
+{
+  "name": "time-converter-cli",
+  "version": "1.0.0",
+  "description": "Super basic utility to quickly convert timestamps into US time zones.",
+  "main": "tc",
+  "dependencies": {
+    "moment-timezone": "^0.5.5",
+    "yargs": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "time",
+    "convert",
+    "cli",
+    "timestamp",
+    "date",
+    "timezone",
+    "converter",
+    "calculator"
+  ],
+  "author": {
+    "name": "Ilya Shaisultanov",
+    "email": "ilya.shaisultanov@gmail.com"
+  },
+  "license": "ISC",
+  "bin": {"tc": "tc"}
+}
