@@ -38,17 +38,19 @@ if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(raw_date_str)) { // stupid mysq
 }
 
 var value
+var tz = timezones_abbr[args.t && args.t.toLowerCase()] || timezones_abbr.est
 
 if (ms) {
   value = moment(ms)
 } else if (js_date) {
   value = new Date(js_date)
 } else if (mysql_date) {
-  var tz = timezones_abbr[args.t && args.t.toLowerCase()] || timezones_abbr.est
-
   value = moment.tz(mysql_date, "YYYY-MM-DD HH:mm:ss", tz);
 
   !args.t && console.log(chalk.blue.bold('Input string processed with timezone %s\n'), tz)
+} else {
+  value = moment(new Date(raw_date_str))
+  console.log(chalk.red.bold('Unknown format, parsing with Date constructor\n'))
 }
 
 var format = chalk.bold('UTC: %s\n') + chalk.bold.green('EST: %s\n') + chalk.bold.blue('MST: %s\n') + chalk.bold.yellow('PST: %s')
