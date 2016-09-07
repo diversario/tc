@@ -1,6 +1,6 @@
 {
   "name": "time-converter-cli",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Super basic utility to quickly convert timestamps into US time zones.",
   "main": "tc",
   "dependencies": {
@@ -29,5 +29,6 @@
   "license": "ISC",
   "bin": {
     "tc": "tc"
-  }
+  },
+  "repository": "https://github.com/diversario/tc"
 }
