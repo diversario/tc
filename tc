@@ -4,6 +4,7 @@
 var moment = require('moment-timezone')
 var args = require('yargs').argv
 var fmt = require('util').format
+var chalk = require('chalk')
 
 var timezones_abbr = {
   'pdt': 'America/Los_Angeles',
@@ -47,10 +48,10 @@ if (ms) {
 
   value = moment.tz(mysql_date, "YYYY-MM-DD HH:mm:ss", tz);
 
-  console.log('Input string processed with timezone %s\n', tz)
+  !args.t && console.log(chalk.blue.bold('Input string processed with timezone %s\n'), tz)
 }
 
-var format = 'UTC: %s\nEST: %s\nMST: %s\nPST: %s'
+var format = chalk.bold('UTC: %s\n') + chalk.bold.green('EST: %s\n') + chalk.bold.blue('MST: %s\n') + chalk.bold.yellow('PST: %s')
 
 var utc = moment(value).utc().toString()
 var est = moment(value).tz(timezones_abbr.est).toString()

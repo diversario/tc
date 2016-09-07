@@ -4,6 +4,7 @@
   "description": "Super basic utility to quickly convert timestamps into US time zones.",
   "main": "tc",
   "dependencies": {
+    "chalk": "^1.1.3",
     "moment-timezone": "^0.5.5",
     "yargs": "^5.0.0"
   },
@@ -26,5 +27,7 @@
     "email": "ilya.shaisultanov@gmail.com"
   },
   "license": "ISC",
-  "bin": {"tc": "tc"}
+  "bin": {
+    "tc": "tc"
+  }
 }
